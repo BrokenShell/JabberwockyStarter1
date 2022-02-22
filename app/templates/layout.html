@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>Jabberwocky</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+<section>
+    <header>
+        <h1><a href="/">Jabberwocky</a></h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="{{ url_for('create') }}">Create</a></li>
+            <li><a href="{{ url_for('data') }}">Data</a></li>
+            <li><a href="{{ url_for('view') }}">View</a></li>
+            <li><a href="{{ url_for('train') }}">Train</a></li>
+            <li><a href="{{ url_for('predict') }}">Predict</a></li>
+        </ul>
+    </nav>
+    <article>
+    {% if not disabled %}
+        {% block content %}
+        {% endblock %}
+    {% else %}
+        <h1>⚠️ Page Disabled!</h1>
+    {% endif %}
+    </article>
+    <footer><p class="right">© 2022 Bloom Institute of Technology</p></footer>
+</section>
+</body>
+</html>

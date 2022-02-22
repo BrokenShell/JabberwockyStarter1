@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Monster Table</h1>
+    {% if count > 0 %}
+        <h3>Total: {{ count }}</h3>
+        {{ table | safe }}
+    {% else %}
+        <h3>No Data!</h3>
+    {% endif %}
+{% endblock %}

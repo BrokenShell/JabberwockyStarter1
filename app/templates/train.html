@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Monster Trainer</h1>
+    {% if count > 0 %}
+        <h3>Model Status: <span id="status">Ready</span></h3>
+        <h5>
+            Model Name: {{ name }}<br>
+            Time Stamp: {{ time_stamp }}<br>
+            Validation Score: {{ score }}<br>
+            Monsters Trained: {{ total }}<br>
+            Available Monsters: {{ available }}<br>
+        </h5>
+        <p>
+            <button onclick="retrain_model()">
+                Retrain Model
+            </button>
+            <button class="hidden" onclick="" disabled>
+                Download Model
+            </button>
+        </p>
+        <script type="application/javascript">
+            function retrain_model() {
+                const target = document.getElementById("status");
+                target.innerText = "Training";
+                window.location.replace("/retrain");
+            }
+
+            function download_model() {
+                window.location.replace("/download");
+            }
+        </script>
+    {% else %}
+        <h3>Model Status: Offline!</h3>
+    {% endif %}
+{% endblock %}

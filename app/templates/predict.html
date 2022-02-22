@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Monster Classifier</h1>
+    {% if count > 63 %}
+        <h3>Feature Input</h3>
+        <form id="form" method="post" action="{{ url_for('predict') }}">
+            <p><label>
+                Level: <input name="level" value="{{ level }}"/>
+            </label></p>
+            <p><label>
+                Health: <input name="health" value="{{ health }}"/>
+            </label></p>
+            <p><label>
+                Offence: <input name="offence" value="{{ offence }}"/>
+            </label></p>
+            <p><label>
+                Defense: <input name="defense" value="{{ defense }}"/>
+            </label></p>
+            <p><label>
+                Balance: <input name="balance" value="{{ balance }}"/>
+            </label></p>
+            <button type="submit" id="submit" name="submit">
+                Predict Rank
+            </button>
+            <br class="clear"/>
+        </form>
+        <h5>
+            Prediction: {{ prediction }}
+            <br>
+            Confidence: {{ confidence }}
+        </h5>
+    {% else %}
+        <h3>Model Status: Offline!</h3>
+    {% endif %}
+{% endblock %}

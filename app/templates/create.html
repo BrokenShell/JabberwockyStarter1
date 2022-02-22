@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Monster Factory</h1>
+    <form method="post" action="{{ url_for('create') }}">
+        <p><label>Number of Monsters:
+            <input name="count" placeholder="1-1024">
+        </label></p>
+        <button type="submit" id="submit" name="submit">
+            Generate Monsters
+        </button>
+        <br class="clear"/>
+    </form>
+    {% if not count %}
+        <blockquote><p>
+            Specify the number of monsters to create above. Then
+            click `Generate Monsters` button. New monsters will be
+            generated, loaded into the database and then displayed below.
+            Limit 1 to 1024 monsters per batch. By default, the monster
+            generation engine will create one monster at a time.
+        </p></blockquote>
+    {% else %}
+        <h3>Monsters Added: {{ count }}</h3>
+        <p>
+            {% for monster in monsters %}
+                {% for key, val in monster.items() %}
+                    {{ key.title() }}: {{ val }}<br>
+                {% endfor %}
+                <br>
+            {% endfor %}
+        </p>
+    {% endif %}
+{% endblock %}
