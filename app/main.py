@@ -10,7 +10,7 @@ def home():
 
 @APP.route("/create")
 def create():
-    return render_template("create.html", disabled=True)
+    return render_template("create.html")
 
 
 @APP.route("/data")
