@@ -35,9 +35,9 @@ class Monster:
 
     def find_rank(self):
         total = sum((self.offence, self.defense, self.balance))
-        if 0 < total < 150:
+        if 0 < total <= 150:
             rank = "Common"
-        elif 150 < total < 250:
+        elif 150 < total <= 250:
             rank = "Rare"
         elif 250 < total <= 300:
             rank = "Epic"

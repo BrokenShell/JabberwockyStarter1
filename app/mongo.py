@@ -17,10 +17,10 @@ class MongoDB:
         return self.database()["Monsters"]
 
     def create(self, data: Dict):
-        self.collection().insert_one(data)
+        self.collection().insert_one(dict(data))
 
     def create_many(self, iterable_data: Iterable[Dict]):
-        self.collection().insert_many(iterable_data)
+        self.collection().insert_many(map(dict, iterable_data))
 
     def read(self, query: Dict) -> List[Dict]:
         return list(self.collection().find(query, {"_id": False}))
@@ -37,5 +37,6 @@ class MongoDB:
 
 if __name__ == '__main__':
     db = MongoDB()
-    print(db.count({}))
-    print(db.count({"name": "Goblin"}))
+    db.delete({})
+    db.seed(1024)
+    print(db.count({"rank": "Unknown"}))
