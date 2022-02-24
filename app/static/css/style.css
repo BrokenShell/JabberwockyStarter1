@@ -201,18 +201,18 @@ form textarea {
     height: 200px;
 }
 
-table {
+article table {
     font-size: 13px;
     text-align: left;
     margin: 40px 0 0 82px;
 }
 
-table th {
+article table th {
     padding: 5px 20px 5px 20px;
     text-align: left;
 }
 
-table td {
+article table td {
     padding: 5px 20px 5px 20px;
 }
 

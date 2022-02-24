@@ -91,12 +91,12 @@ button:hover {
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-table th {
+article table th {
     color: #dddddd;
     border-bottom: 1px solid #111111;
 }
 
-table td {
+article table td {
     color: #aaaaaa;
     border-bottom: 1px solid #111111;
 }
