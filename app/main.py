@@ -1,11 +1,15 @@
+from random import randint
+
 from flask import Flask, render_template, request
 from pandas import DataFrame
 
+from app.model import ModelRFC
 from app.mongo import MongoDB
-from app.monsters import Monster
+
 
 APP = Flask(__name__)
 APP.db = MongoDB()
+APP.model = ModelRFC()
 
 
 @APP.route("/")
@@ -25,19 +29,20 @@ def create():
             min_int = min(int(raw_count), 1024)
             max_int = max(1, min_int)
             count = max_int
-            monsters = [vars(Monster()) for _ in range(count)]
-            APP.db.create_many(monsters)
+            monsters = APP.db.seed(count)
         return render_template(
             "create.html",
             count=count,
             monsters=monsters,
         )
-    return render_template("create.html")
+    else:
+        return render_template("create.html")
 
 
 @APP.route("/data")
 def data():
     df = DataFrame(APP.db.read({}))
+    df.columns = map(lambda s: s.title(), df.columns)
     table = df.to_html()
     count = df.shape[0]
     return render_template(
@@ -54,12 +59,55 @@ def view():
 
 @APP.route("/train")
 def train():
-    return render_template("train.html", disabled=True)
+    name = APP.model.name
+    time_stamp = APP.model.time_stamp
+    score = APP.model.score()
+    total = APP.model.total_rows
+    count = APP.db.count()
+    available = count - total
+    return render_template(
+        "train.html",
+        name=name,
+        time_stamp=time_stamp,
+        score=score,
+        total=total,
+        available=available,
+        count=count,
+    )
 
 
-@APP.route("/predict")
+@APP.route("/retrain", methods=["GET", "POST"])
+def retrain():
+    APP.model = ModelRFC()
+    return train()
+
+
+@APP.route("/predict", methods=["GET", "POST"])
 def predict():
-    return render_template("predict.html", disabled=True)
+    count = APP.db.count()
+    basis = {
+        "level": int(request.values.get("level", randint(1, 100))),
+        "health": int(request.values.get("health", randint(1, 100))),
+        "offence": int(request.values.get("offence", randint(1, 100))),
+        "defense": int(request.values.get("defense", randint(1, 100))),
+        "balance": int(request.values.get("balance", randint(1, 100))),
+    }
+    if count > 32:
+        prediction, confidence = APP.model(DataFrame([basis]))
+        confidence = f"{100 * confidence:.0f}%"
+    else:
+        prediction, confidence = "", ""
+    return render_template(
+        "predict.html",
+        count=count,
+        level=basis["level"],
+        health=basis["health"],
+        offence=basis["offence"],
+        defense=basis["defense"],
+        balance=basis["balance"],
+        prediction=prediction,
+        confidence=confidence,
+    )
 
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
-from typing import List, Tuple
+from datetime import datetime
+from typing import Tuple
 
+import pytz
 from pandas import DataFrame
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -28,23 +30,33 @@ class ModelRFC:
         self.total_tested = self.y_test.shape[0]
 
         self.name = "Random Forest Classifier"
+        timezone = pytz.timezone("US/Pacific")
+        self.time_stamp = datetime.now(timezone).strftime("%Y-%m-%d %H:%M:%S")
 
         self.model = RandomForestClassifier(
             n_jobs=-1,
             n_estimators=33,
+            random_state=42,
         )
-        self.model.fit(self.X_train.values, self.y_train)
+        self.model.fit(self.X_train, self.y_train)
 
-    def __call__(self, feature_basis: List[int]) -> Tuple:
-        pred = self.model.predict([feature_basis])[0]
-        prob = self.model.predict_proba([feature_basis])[0]
+    def __call__(self, feature_basis: DataFrame) -> Tuple:
+        pred = self.model.predict(feature_basis)[0]
+        prob = self.model.predict_proba(feature_basis)[0]
         return pred, max(prob)
 
     def score(self):
-        return f"{self.model.score(self.X_test.values, self.y_test):.3f}"
+        return f"{100 * self.model.score(self.X_test, self.y_test):.0f}%"
 
 
 if __name__ == '__main__':
     model = ModelRFC()
-    # print(model([10, 10, 10, 10, 10]))
+    pred_test = DataFrame([{
+        "level": 10,
+        "health": 10,
+        "offence": 10,
+        "defense": 10,
+        "balance": 10,
+    }])
+    print(model(pred_test))
     print(model.score())

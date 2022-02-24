@@ -25,8 +25,8 @@ class Monster:
     }
 
     def __init__(self):
-        self.level = dice(1, 100)
         self.name = choice(list(self.monsters.keys()))
+        self.level = dice(1, 100)
         self.health = dice(self.level, self.monsters[self.name])
         self.offence = dice(1, 100)
         self.defense = dice(1, 100)
