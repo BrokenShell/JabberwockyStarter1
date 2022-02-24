@@ -58,17 +58,26 @@ def view():
     df = DataFrame(APP.db.read())
     default_filter = "All Monsters"
     name = request.values.get("name", default_filter)
+    x_axis = request.values.get("x_axis", "offence")
+    y_axis = request.values.get("y_axis", "defense")
+    target = request.values.get("target", "rank")
+    options = list(df.columns)
+    options.remove("name")
     count = df.shape[0]
     if count > 0:
-        filters_options = sorted(df["name"].unique())
-        filters_options.insert(0, default_filter)
-        graph = visualizer(df, name)
+        filter_options = sorted(df["name"].unique())
+        filter_options.insert(0, default_filter)
+        graph = visualizer(df, x_axis, y_axis, target, name)
         return render_template(
             "view.html",
             name=name,
-            count=count,
-            name_filters=filters_options,
+            filter_options=filter_options,
+            x_axis=x_axis,
+            y_axis=y_axis,
+            target=target,
+            options=options,
             graph=graph,
+            count=count,
         )
     else:
         return render_template(

@@ -5,7 +5,7 @@
         <form method="post" action="{{ url_for('view') }}">
             <p><label>Filter:
                 <select name="name">
-                    {% for op in name_filters %}
+                    {% for op in filter_options %}
                         {% if op == name %}
                             <option selected="selected">{{ op }}</option>
                         {% else %}
@@ -14,10 +14,47 @@
                     {% endfor %}
                 </select>
             </label></p>
+
+            <p><label>X-axis:
+                <select name="x_axis">
+                    {% for op in options %}
+                        {% if op == x_axis %}
+                            <option selected="selected">{{ op }}</option>
+                        {% else %}
+                            <option>{{ op }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </label></p>
+
+            <p><label>Y-axis:
+                <select name="y_axis">
+                    {% for op in options %}
+                        {% if op == y_axis %}
+                            <option selected="selected">{{ op }}</option>
+                        {% else %}
+                            <option>{{ op }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </label></p>
+
+            <p><label>Target:
+                <select name="target">
+                    {% for op in options %}
+                        {% if op == target %}
+                            <option selected="selected">{{ op }}</option>
+                        {% else %}
+                            <option>{{ op }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </label></p>
+
             <button type="submit" id="submit" name="submit">
                 Generate Chart
             </button>
-            <br class="clear"/>
+            <br class="clear">
         </form>
         <div id="chart">
             <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>

@@ -1,8 +1,7 @@
 import altair as alt
-from pandas import DataFrame
 
 
-def visualizer(df: DataFrame, name: str):
+def visualizer(df, x_axis, y_axis, target, name):
 
     text_color = "#AAAAAA"
     graph_color = "#333333"
@@ -10,7 +9,7 @@ def visualizer(df: DataFrame, name: str):
 
     if name != "All Monsters":
         title = f"{name}s"
-        data = df[df["name"] == name]
+        data = df[df['name'] == name]
     else:
         title = name
         data = df
@@ -19,9 +18,9 @@ def visualizer(df: DataFrame, name: str):
         data,
         title=title,
     ).mark_circle(size=100).encode(
-        x="offence",
-        y="defense",
-        color="rank",
+        x=alt.X(x_axis, axis=alt.Axis(title=x_axis)),
+        y=alt.Y(y_axis, axis=alt.Axis(title=y_axis)),
+        color=target,
         tooltip=alt.Tooltip(list(df.columns)),
     ).properties(
         width=400,
