@@ -3,6 +3,7 @@ from random import randint
 from flask import Flask, render_template, request
 from pandas import DataFrame
 
+from app.graphs import visualizer
 from app.model import ModelRFC
 from app.mongo import MongoDB
 
@@ -52,9 +53,29 @@ def data():
     )
 
 
-@APP.route("/view")
+@APP.route("/view", methods=["GET", "POST"])
 def view():
-    return render_template("view.html", disabled=True)
+    df = DataFrame(APP.db.read())
+    default_filter = "All Monsters"
+    name = request.values.get("name", default_filter)
+    count = df.shape[0]
+    if count > 0:
+        filters_options = sorted(df["name"].unique())
+        filters_options.insert(0, default_filter)
+        graph = visualizer(df, name)
+        return render_template(
+            "view.html",
+            name=name,
+            count=count,
+            name_filters=filters_options,
+            graph=graph,
+        )
+    else:
+        return render_template(
+            "view.html",
+            name=name,
+            count=count,
+        )
 
 
 @APP.route("/train")
