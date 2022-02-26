@@ -21,7 +21,9 @@ em, i {
 a, a:link, a:visited {
     color: #8888c6;
 }
-
+.interactive {
+    color: #eeeeee;
+}
 nav {
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
@@ -40,7 +42,8 @@ h1, h2, h3, h4, h5 {
     color: #aaaaaa;
 }
 
-header h1 a:link, header h1 a:active, header h1 a:visited, header h1 a:hover {
+header h1 a:link, header h1 a:active,
+header h1 a:visited, header h1 a:hover {
     color: #dddddd;
 }
 

@@ -25,9 +25,9 @@
             <br class="clear"/>
         </form>
         <h5>
-            Prediction: {{ prediction }}
+            Prediction: <span class="interactive">{{ prediction }}</span>
             <br>
-            Confidence: {{ confidence }}
+            Confidence: <span class="interactive">{{ confidence }}</span>
         </h5>
     {% else %}
         <h3>Model Status: Offline!</h3>

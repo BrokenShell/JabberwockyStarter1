@@ -40,16 +40,39 @@ def create():
         return render_template("create.html")
 
 
-@APP.route("/data")
+@APP.route("/data", methods=["GET", "POST"])
 def data():
-    df = DataFrame(APP.db.read({}))
-    df.columns = map(lambda s: s.title(), df.columns)
-    table = df.to_html()
-    count = df.shape[0]
+    default_filter = "All Monsters"
+    default_target = "All Ranks"
+    df = DataFrame(APP.db.read())
+    name = request.values.get("name", default_filter)
+    target = request.values.get("target", default_target)
+    if df.shape[0] > 0:
+        filter_options = sorted(df["name"].unique())
+        target_options = sorted(df["rank"].unique())
+        target_options.insert(0, default_target)
+        if name != "All Monsters":
+            df = df[df["name"] == name]
+
+        if target != default_target:
+            df = df[df["rank"] == target]
+        filter_options.insert(0, default_filter)
+        df.columns = map(lambda s: s.title(), df.columns)
+        table = df.to_html()
+        count = df.shape[0]
+    else:
+        table = None
+        count = 0
+        filter_options = []
+        target_options = []
     return render_template(
         "data.html",
+        name=name,
         table=table,
         count=count,
+        filter_options=filter_options,
+        target=target,
+        target_options=target_options,
     )
 
 
@@ -141,4 +164,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    APP.run(debug=True)
+    APP.run()

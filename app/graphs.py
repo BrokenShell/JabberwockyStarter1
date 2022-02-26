@@ -1,27 +1,33 @@
 import altair as alt
+from pandas import DataFrame
 
 
-def visualizer(df, x_axis, y_axis, target, name):
+def visualizer(df: DataFrame, x_axis: str, y_axis: str, target: str, name: str):
 
     text_color = "#AAAAAA"
     graph_color = "#333333"
     graph_bg = "#252525"
 
-    if name != "All Monsters":
-        title = f"{name}s"
-        data = df[df['name'] == name]
-    else:
+    if name == "All Monsters":
         title = name
         data = df
+    else:
+        title = f"{name}s"
+        data = df[df['name'] == name]
+
+    x_axis = x_axis.title()
+    y_axis = y_axis.title()
+    target = target.title()
+    data.columns = map(lambda s: s.title(), df.columns)
 
     graph = alt.Chart(
         data,
         title=title,
     ).mark_circle(size=100).encode(
-        x=alt.X(x_axis, axis=alt.Axis(title=x_axis)),
-        y=alt.Y(y_axis, axis=alt.Axis(title=y_axis)),
+        x=alt.X(x_axis, axis=alt.Axis(title=x_axis.title())),
+        y=alt.Y(y_axis, axis=alt.Axis(title=y_axis.title())),
         color=target,
-        tooltip=alt.Tooltip(list(df.columns)),
+        tooltip=alt.Tooltip(list(data.columns)),
     ).properties(
         width=400,
         height=440,
