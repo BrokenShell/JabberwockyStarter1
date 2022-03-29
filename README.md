@@ -11,9 +11,10 @@
 - Visualize Graph Data
 - Train and Retrain ML Model
 - Make ML Predictions
+
 ### Stretch Goals
-- Download ML Model
-- Light Theme CSS
+- Downloadable ML Model
+- Alternate Light Theme CSS
 - Graph Options
 - Table Stats
 - ML Training Options

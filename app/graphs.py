@@ -24,8 +24,8 @@ def visualizer(df: DataFrame, x_axis: str, y_axis: str, target: str, name: str):
         data,
         title=title,
     ).mark_circle(size=100).encode(
-        x=alt.X(x_axis, axis=alt.Axis(title=x_axis.title())),
-        y=alt.Y(y_axis, axis=alt.Axis(title=y_axis.title())),
+        x=alt.X(x_axis),
+        y=alt.Y(y_axis),
         color=target,
         tooltip=alt.Tooltip(list(data.columns)),
     ).properties(

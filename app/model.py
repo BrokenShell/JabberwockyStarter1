@@ -47,16 +47,3 @@ class ModelRFC:
 
     def score(self):
         return f"{100 * self.model.score(self.X_test, self.y_test):.0f}%"
-
-
-if __name__ == '__main__':
-    model = ModelRFC()
-    pred_test = DataFrame([{
-        "level": 10,
-        "health": 10,
-        "offence": 10,
-        "defense": 10,
-        "balance": 10,
-    }])
-    print(model(pred_test))
-    print(model.score())

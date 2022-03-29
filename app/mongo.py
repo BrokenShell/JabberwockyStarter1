@@ -35,10 +35,3 @@ class MongoDB:
         monsters = [vars(Monster()) for _ in range(count)]
         self.create_many(monsters)
         return monsters
-
-
-if __name__ == '__main__':
-    db = MongoDB()
-    # db.delete({})
-    # db.seed(1024)
-    print(db.read())
