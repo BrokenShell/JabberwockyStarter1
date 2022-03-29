@@ -33,7 +33,7 @@ class Monster:
         self.balance = dice(1, 100)
         self.rank = self.find_rank()
 
-    def find_rank(self):
+    def find_rank(self) -> str:
         total = sum((self.offence, self.defense, self.balance))
         if 0 < total <= 150:
             rank = "Common"

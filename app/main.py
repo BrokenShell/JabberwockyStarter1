@@ -147,7 +147,7 @@ def predict():
     }
     if count > 32:
         prediction, confidence = APP.model(DataFrame([basis]))
-        confidence = f"{100 * confidence:.0f}%"
+        confidence = f"{confidence:.0%}"
     else:
         prediction, confidence = "", ""
     return render_template(

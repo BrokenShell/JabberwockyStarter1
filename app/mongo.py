@@ -31,7 +31,7 @@ class MongoDB:
     def count(self, query: Optional[Dict] = None) -> int:
         return self.collection().count_documents(query or {})
 
-    def seed(self, count: int):
+    def seed(self, count: int) -> List[Dict]:
         monsters = [vars(Monster()) for _ in range(count)]
         self.create_many(monsters)
         return monsters
