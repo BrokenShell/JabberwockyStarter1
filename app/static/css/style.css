@@ -210,10 +210,12 @@ article table {
 article table th {
     padding: 5px 20px 5px 20px;
     text-align: left;
+    font-size: 16px;
 }
 
 article table td {
     padding: 5px 20px 5px 20px;
+    font-size: 14px;
 }
 
 #chart {
